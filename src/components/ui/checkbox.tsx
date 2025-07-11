@@ -18,7 +18,7 @@ function Checkbox({ className, ...props }: React.ComponentProps<typeof CheckboxP
     >
       <CheckboxPrimitive.Indicator
         data-slot="checkbox-indicator"
-        className="flex items-center justify-center text-current transition-none"
+        className="text-green-400 flex items-center justify-center transition-none"
       >
         <CheckIcon className="size-3.5" />
       </CheckboxPrimitive.Indicator>

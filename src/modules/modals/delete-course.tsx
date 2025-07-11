@@ -190,7 +190,7 @@ export const DeleteCourseModal = () => {
             disabled={!isConfirmValid || isDeleting}
             className={`flex-1 ${
               isConfirmValid
-                ? 'bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800'
+                ? 'text-white bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800'
                 : 'bg-red-500/20 text-red-300'
             } transition-all duration-300`}
           >

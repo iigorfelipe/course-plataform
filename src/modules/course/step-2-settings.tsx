@@ -65,30 +65,30 @@ export const SettingsStep = ({ type = 'new' }: SettingsStep) => {
               className="flex flex-col gap-4"
             >
               <div className="flex items-center gap-3 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors">
-                <RadioGroupItem value="beginner" id="beginner" className="border-white/40" />
+                <RadioGroupItem value="beginner" id="beginner" className="border-white/40 " />
                 <Label
                   htmlFor="beginner"
-                  className="text-white cursor-pointer flex flex-col sm:flex-row items-start"
+                  className="text-white cursor-pointer flex flex-col sm:flex-row items-start sm:items-center"
                 >
                   <span className="font-medium">Iniciante</span>
                   <p className="text-sm text-white/60 ">Para quem está começando</p>
                 </Label>
               </div>
               <div className="flex items-center gap-3 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors">
-                <RadioGroupItem value="intermediate" id="intermediate" className="border-white/40" />
+                <RadioGroupItem value="intermediate" id="intermediate" className="border-white/40 " />
                 <Label
                   htmlFor="intermediate"
-                  className="text-white cursor-pointer flex flex-col sm:flex-row items-start"
+                  className="text-white cursor-pointer flex flex-col sm:flex-row items-start sm:items-center"
                 >
                   <span className="font-medium">Intermediário</span>
                   <p className="text-sm text-white/60">Já tem conhecimento básico</p>
                 </Label>
               </div>
               <div className="flex items-center gap-3 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors">
-                <RadioGroupItem value="advanced" id="advanced" className="border-white/40" />
+                <RadioGroupItem value="advanced" id="advanced" className="border-white/40 " />
                 <Label
                   htmlFor="advanced"
-                  className="text-white cursor-pointer flex flex-col sm:flex-row items-start"
+                  className="text-white cursor-pointer flex flex-col sm:flex-row items-start sm:items-center"
                 >
                   <span className="font-medium">Avançado</span>
                   <p className="text-sm text-white/60">Para especialistas</p>
@@ -103,11 +103,11 @@ export const SettingsStep = ({ type = 'new' }: SettingsStep) => {
             id="published"
             checked={newCourse.published}
             onCheckedChange={(checked) => setNewCourse((prev) => ({ ...prev, published: !!checked }))}
-            className="border-white/40"
+            className="border-white/40 "
           />
           <Label
             htmlFor="published"
-            className="text-white cursor-pointer flex flex-col sm:flex-row items-start"
+            className="text-white cursor-pointer flex flex-col sm:flex-row items-start sm:items-center"
           >
             <span className="font-medium">{courseStatus}</span>
             <p className="text-sm text-white/60">{courseStatusDescription} visível para os alunos</p>
@@ -120,16 +120,16 @@ export const SettingsStep = ({ type = 'new' }: SettingsStep) => {
             onClick={() => setCurrentStep(1)}
             className="bg-white/10 border-white/20 text-white hover:bg-white/20"
           >
-            <ArrowLeft className="w-4 h-4 mr-2" />
+            <ArrowLeft className="size-4 mr-2" />
             Anterior
           </Button>
           <Button
             onClick={() => setCurrentStep(3)}
-            className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 px-8"
+            className="text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 px-8"
             disabled={newCourse.category.trim().length === 0}
           >
             Próximo
-            <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            <ArrowLeft className="size-4 ml-2 rotate-180" />
           </Button>
         </div>
       </CardContent>

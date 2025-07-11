@@ -155,9 +155,9 @@ export const ContentStep = ({ type = 'new' }: ContentStep) => {
             <p className="text-white/60 mb-6">Comece adicionando o primeiro módulo do seu curso</p>
             <Button
               onClick={addModule}
-              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+              className="text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
             >
-              <Plus className="size-4 mr-2" />
+              <Plus className="size-4 " />
               Adicionar Primeiro Módulo
             </Button>
           </div>
@@ -165,7 +165,7 @@ export const ContentStep = ({ type = 'new' }: ContentStep) => {
           <div className="space-y-6">
             {newCourseAtom.modules?.map((module, moduleIndex) => (
               <div key={module.id} className="bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-6">
-                <div className="flex flex-col sm:flex-row items-center gap-4 mb-6">
+                <div className="flex flex-col sm:flex-row items-center gap-4 mb-4">
                   <div className="flex gap-2 w-full items-center">
                     <div className="px-3 py-1.5 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl flex items-center justify-center text-white font-bold">
                       {moduleIndex + 1}
@@ -192,7 +192,7 @@ export const ContentStep = ({ type = 'new' }: ContentStep) => {
                     onClick={() => addLesson(module.id)}
                     className="bg-white/10 border-white/20 text-white hover:bg-white/20"
                   >
-                    <Plus className="size-4 mr-2" />
+                    <Plus className="size-4" />
                     Nova Aula
                   </Button>
                 </div>
@@ -201,14 +201,24 @@ export const ContentStep = ({ type = 'new' }: ContentStep) => {
                   <div className="space-y-4">
                     {module.lessons.map((lesson, lessonIndex) => (
                       <div key={lesson.id} className="bg-white/5 border border-white/10 rounded-xl p-4">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
-                          <Input
-                            placeholder={`Título da Aula ${lessonIndex + 1}`}
-                            value={lesson.title}
-                            onChange={(e) => updateLesson(module.id, lesson.id, 'title', e.target.value)}
-                            className="bg-white/10 border-white/20 text-white placeholder:text-white/40"
-                          />
-                          <div className="flex gap-2">
+                        <div className="flex flex-col sm:flex-row w-full gap-4 mb-3">
+                          <div className="flex items-center gap-2 w-full">
+                            <Input
+                              placeholder={`Título da Aula ${lessonIndex + 1}`}
+                              value={lesson.title}
+                              onChange={(e) => updateLesson(module.id, lesson.id, 'title', e.target.value)}
+                              className="bg-white/10 w-[100%] border-white/20 text-white placeholder:text-white/40"
+                            />
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => removeLesson(module.id, lesson.id)}
+                              className="bg-red-500/20 sm:hidden w-fit border-red-500/40 text-red-300 hover:bg-red-500/30"
+                            >
+                              <Trash2 className="size-4" />
+                            </Button>
+                          </div>
+                          <div className="flex gap-2 items-center">
                             <Input
                               placeholder="hh:mm"
                               value={lesson.duration}
@@ -218,14 +228,14 @@ export const ContentStep = ({ type = 'new' }: ContentStep) => {
                                   updateLesson(module.id, lesson.id, 'duration', formatted);
                                 }
                               }}
-                              className="bg-white/10 border-white/20 text-white placeholder:text-white/40"
+                              className="bg-white/10 text-center sm:text-start sm:w-16 border-white/20 text-white placeholder:text-white/40"
                             />
 
                             <Button
                               variant="outline"
                               size="sm"
                               onClick={() => removeLesson(module.id, lesson.id)}
-                              className="bg-red-500/20 border-red-500/40 text-red-300 hover:bg-red-500/30"
+                              className="bg-red-500/20 hidden sm:flex border-red-500/40 text-red-300 hover:bg-red-500/30"
                             >
                               <Trash2 className="size-4" />
                             </Button>
@@ -256,9 +266,9 @@ export const ContentStep = ({ type = 'new' }: ContentStep) => {
         {newCourseAtom.modules?.length > 0 && (
           <Button
             onClick={addModule}
-            className="bg-gradient-to-r w-full mt-8 from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700"
+            className=" text-white bg-gradient-to-r w-full mt-8 from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700"
           >
-            <Plus className="size-4 mr-2" />
+            <Plus className="size-4 " />
             Novo Módulo
           </Button>
         )}
@@ -269,16 +279,16 @@ export const ContentStep = ({ type = 'new' }: ContentStep) => {
             onClick={() => setCurrentStep(2)}
             className="bg-white/10 border-white/20 text-white hover:bg-white/20"
           >
-            <ArrowLeft className="size-4 mr-2" />
+            <ArrowLeft className="size-4 " />
             Anterior
           </Button>
           {newCourseAtom.modules?.length > 0 && (
             <div className="flex gap-4">
               <Button
                 onClick={saveCourse}
-                className="bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 px-8"
+                className="text-white bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 px-8"
               >
-                <Save className="size-4 mr-2" />
+                <Save className="size-4 " />
                 Salvar {saveButton}
               </Button>
             </div>

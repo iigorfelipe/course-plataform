@@ -116,7 +116,7 @@ export const BasicInformationStep = ({ type = 'new' }: BasicInformationStep) => 
           <Tooltip>
             <TooltipTrigger
               onClick={() => setCurrentStep(2)}
-              className="inline-flex items-center justify-center bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 px-8 h-9 py-2 has-[>svg]:px-3 whitespace-nowrap rounded-md text-sm font-medium transition-all text-primary-foreground shadow-xs"
+              className="inline-flex text-white items-center justify-center bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 px-8 h-9 py-2 has-[>svg]:px-3 whitespace-nowrap rounded-md text-sm font-medium transition-all text-primary-foreground shadow-xs"
               disabled={course.title.trim().length === 0}
             >
               Próximo
