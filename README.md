@@ -1,13 +1,20 @@
 <div align="center">
-  <h1>� Plataforma de Curso</h1>
-  <img width="300" src="https://octodex.github.com/images/manufacturetocat.png" />
-  <br />
-  <b>Plataforma moderna para criação, gestão e visualização de cursos online.</b>
-  <br />
-  <i>Projeto em desenvolvimento</i>
+
+# Plataforma de Curso
+
 </div>
 
----
+[🔗 Acesse o site](https://course-plataform-xi.vercel.app/)
+
+## 🖼️ Imagens:
+
+<div align="center">
+<img src="https://github.com/user-attachments/assets/b3bc79a2-f075-4355-84c6-7878f28fb6c3" />
+<img src="https://github.com/user-attachments/assets/ed9d7f96-9deb-4f76-b060-6acb6a281145" alt="mobile detail" height="450px" />
+<img src="https://github.com/user-attachments/assets/6f84fe1e-78bb-434c-928a-4df28ce51105" alt="mobile detail" height="450px" />
+<img src="https://github.com/user-attachments/assets/0d728db2-c43d-44e2-8850-4602c5773b71" alt="mobile detail" height="450px" />
+<img src="https://github.com/user-attachments/assets/7e108287-0a4e-415e-be71-5af666db8523" alt="mobile detail" height="450px" />
+</div>
 
 ## ✨ Sobre o Projeto
 
@@ -20,8 +27,6 @@
 - [TypeScript](https://www.typescriptlang.org/)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [Jotai](https://jotai.org/)
-- [Lucide Icons](https://lucide.dev/)
-- [Sonner](https://sonner.emilkowal.ski/)
 
 ## 🛠️ Instalação e Uso
 
@@ -40,10 +45,17 @@
    yarn install
    ```
 
-3. **Inicie o servidor de desenvolvimento:**
+3. **Execute o projeto:**
 
    ```bash
    npm run dev
    # ou
    yarn dev
    ```
+
+## 👨‍💻 Autor
+
+**@Igor Soares**
+
+[![Linkedin Badge](https://img.shields.io/badge/-LinkdedIn-blue?style=for-the-badge&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/iigor-felipe/)](https://www.linkedin.com/in/iigor-felipe/)
+[![Gmail Badge](https://img.shields.io/badge/-Gmail-c14438?style=for-the-badge&logo=Gmail&logoColor=white&link=mailto:iigorfelipe@gmail.com)](mailto:iigorfelipe@gmail.com)
