@@ -48,7 +48,7 @@ export default function CoursePreview() {
   if (!course) return <NotFoundCourse />;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+    <div className="min-h-screen flex justify-center w-full bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
       <BgPreview />
 
       <div className="container p-4 relative z-10">
