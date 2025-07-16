@@ -61,3 +61,13 @@ export const getCategoryLabel = (category: string) => {
   };
   return categories[category as keyof typeof categories] || category;
 };
+
+export const getEmbedUrl = (url: string) => {
+  const shortRegex = /youtube\.com\/shorts\/([A-Za-z0-9_-]{11})/;
+  const watchRegex = /youtube\.com\/watch\?v=([A-Za-z0-9_-]{11})/;
+  const shortLinkRegex = /youtu\.be\/([A-Za-z0-9_-]{11})/;
+
+  const match = url.match(shortRegex) || url.match(watchRegex) || url.match(shortLinkRegex);
+
+  return match ? `https://www.youtube.com/embed/${match[1]}?autoplay=1` : null;
+};
