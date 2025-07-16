@@ -10,6 +10,7 @@ import { useAtom, useSetAtom } from 'jotai';
 import { courseAtom } from '@store/course';
 import { ChangeEvent } from 'react';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@components/ui/tooltip';
+import { toast } from 'sonner';
 
 type BasicInformationStep = {
   type: 'new' | 'edit';
@@ -26,10 +27,27 @@ export const BasicInformationStep = ({ type = 'new' }: BasicInformationStep) => 
 
   const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
+
     if (file) {
+      const maxSizeInBytes = 4 * 1024 * 1024; // 4MB
+
+      if (file.size > maxSizeInBytes) {
+        toast.warning('A imagem é muito grande.', {
+          description: 'O tamanho máximo permitido é 4MB.',
+          style: {
+            background: '#121212',
+            color: 'yellow',
+          },
+        });
+        return;
+      }
+
       const reader = new FileReader();
       reader.onload = (e) => {
-        setCourse((prev) => ({ ...prev, thumbnail: e.target?.result as string }));
+        setCourse((prev) => ({
+          ...prev,
+          thumbnail: e.target?.result as string,
+        }));
       };
       reader.readAsDataURL(file);
     }
@@ -90,15 +108,20 @@ export const BasicInformationStep = ({ type = 'new' }: BasicInformationStep) => 
               onChange={handleImageUpload}
               className="hidden"
             />
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => document.getElementById('thumbnail')?.click()}
-              className="bg-white/10 border-white/20 text-white hover:bg-white/20 hover:border-white/30"
-            >
-              <Upload className="w-4 h-4 mr-2" />
-              Escolher Imagem
-            </Button>
+            <div className="flex flex-col gap-2">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => document.getElementById('thumbnail')?.click()}
+                className="bg-white/10 border-white/20 text-white hover:bg-white/20 hover:border-white/30"
+              >
+                <Upload className="size-4 mr-2" />
+                Escolher Imagem
+              </Button>
+              <span className="text-yellow-300 text-xs">
+                Tamanho máximo de <span className="font-medium">4MB</span>
+              </span>
+            </div>
             {course.thumbnail && (
               <div className="w-24 h-24 rounded-xl overflow-hidden border-2 border-white/20">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -116,11 +139,13 @@ export const BasicInformationStep = ({ type = 'new' }: BasicInformationStep) => 
           <Tooltip>
             <TooltipTrigger
               onClick={() => setCurrentStep(2)}
-              className="inline-flex text-white items-center justify-center bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 px-8 h-9 py-2 has-[>svg]:px-3 whitespace-nowrap rounded-md text-sm font-medium transition-all text-primary-foreground shadow-xs"
+              className={`inline-flex text-white items-center justify-center bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 px-8 h-9 py-2 has-[>svg]:px-3 whitespace-nowrap rounded-md text-sm font-medium transition-all text-primary-foreground shadow-xs ${
+                course.title.trim().length === 0 && 'opacity-30'
+              }`}
               disabled={course.title.trim().length === 0}
             >
               Próximo
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+              <ArrowLeft className="size-4 ml-2 rotate-180" />
             </TooltipTrigger>
             {course.title.trim().length === 0 && (
               <TooltipContent>
