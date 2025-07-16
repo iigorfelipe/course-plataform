@@ -11,7 +11,6 @@ export const StatsCards = () => {
   const isLoaded = useAtomValue(courseAtom.isLoaded);
 
   return (
-    /* Stats Cards */
     <div
       className={`grid grid-cols-1 md:grid-cols-4 gap-6 mb-12 ${isLoaded ? 'animate-slide-up' : 'opacity-0'}`}
       style={{ animationDelay: '0.2s' }}

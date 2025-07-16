@@ -13,15 +13,14 @@ import {
   getTotalDuration,
   getTotalLessons,
 } from '@utils/get';
-import { Course } from '@contracts/course';
 import { toast } from 'sonner';
 
 export const CourseInfo = () => {
   const [course, setCourse] = useAtom(courseAtom.course);
+  const [courses, setCourses] = useAtom(courseAtom.courses);
 
   const saveCourse = () => {
     const now = new Date().toISOString();
-    const courses: Course[] = JSON.parse(localStorage.getItem('courses') || '[]');
     const currentCourse = courses.find((c) => c.id === course.id);
 
     if (currentCourse) {
@@ -32,7 +31,7 @@ export const CourseInfo = () => {
       };
       setCourse(updatedCourse);
       const updatedCourses = [...courses.filter((c) => c.id !== course.id), updatedCourse];
-      localStorage.setItem('courses', JSON.stringify(updatedCourses));
+      setCourses(updatedCourses);
       return;
     }
   };
@@ -43,14 +42,19 @@ export const CourseInfo = () => {
     navigator.clipboard
       .writeText(courseUrl)
       .then(() => {
-        toast.success('O link do curso foi copiado para a área de transferência', {
-          style: { backgroundColor: 'green' },
-          duration: 4000,
+        toast.success('Link do curso copiado!', {
+          style: {
+            background: '#121212',
+            color: 'green',
+          },
         });
       })
       .catch(() => {
         toast.error('Erro ao copiar o link.', {
-          style: { backgroundColor: 'red' },
+          style: {
+            background: '#121212',
+            color: 'red',
+          },
         });
       });
   };

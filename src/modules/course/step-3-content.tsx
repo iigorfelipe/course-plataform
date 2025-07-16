@@ -10,6 +10,7 @@ import type { Course, Lesson, Module } from '@contracts/course';
 import { useAtom, useSetAtom } from 'jotai';
 import { courseAtom } from '@store/course';
 import { formatTime } from 'utils/format';
+import { toast } from 'sonner';
 
 type ContentStep = {
   type: 'new' | 'edit';
@@ -18,6 +19,7 @@ type ContentStep = {
 export const ContentStep = ({ type = 'new' }: ContentStep) => {
   const router = useRouter();
   const [newCourseAtom, setNewCourseAtom] = useAtom(courseAtom.course);
+  const [courses, setCourses] = useAtom(courseAtom.courses);
   const setCurrentStep = useSetAtom(courseAtom.currentStep);
 
   const saveButton = type === 'new' ? 'Curso' : 'Alterações';
@@ -93,9 +95,9 @@ export const ContentStep = ({ type = 'new' }: ContentStep) => {
 
   const saveCourse = () => {
     const now = new Date().toISOString();
-    const existingCourses: Course[] = JSON.parse(localStorage.getItem('courses') || '[]');
 
     let updatedCourses: Course[] = [];
+    let feedbackMessage = '';
 
     if (type === 'new') {
       const newCourse: Course = {
@@ -112,7 +114,8 @@ export const ContentStep = ({ type = 'new' }: ContentStep) => {
         updatedAt: now,
       };
 
-      updatedCourses = [...existingCourses, newCourse];
+      updatedCourses = [...courses, newCourse];
+      feedbackMessage = 'Curso criado com sucesso!';
     }
 
     if (type === 'edit') {
@@ -121,10 +124,20 @@ export const ContentStep = ({ type = 'new' }: ContentStep) => {
         updatedAt: now,
       };
 
-      updatedCourses = existingCourses.map((c) => (c.id === updatedCourse.id ? updatedCourse : c));
+      updatedCourses = courses.map((c) => (c.id === updatedCourse.id ? updatedCourse : c));
+      feedbackMessage = 'Curso atualizado com sucesso!';
     }
 
-    localStorage.setItem('courses', JSON.stringify(updatedCourses));
+    setCourses(updatedCourses);
+
+    toast.success(feedbackMessage, {
+      duration: 3000,
+      style: {
+        background: '#121212',
+        color: 'green',
+      },
+    });
+
     router.push('/');
   };
 

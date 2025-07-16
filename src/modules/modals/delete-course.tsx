@@ -9,6 +9,7 @@ import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { courseAtom } from '@store/course';
 import { modalAtom } from '@store/modals';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@components/ui/dialog';
+import { toast } from 'sonner';
 
 export const DeleteCourseModal = () => {
   const [confirmText, setConfirmText] = useState('');
@@ -21,7 +22,6 @@ export const DeleteCourseModal = () => {
   const deleteCourse = () => {
     const updatedCourses = courses.filter(({ id }) => course.id !== id);
     setCourses(updatedCourses);
-    localStorage.setItem('courses', JSON.stringify(updatedCourses));
   };
 
   const handleDelete = async () => {
@@ -34,6 +34,14 @@ export const DeleteCourseModal = () => {
     deleteCourse();
     setIsDeleting(false);
     setConfirmText('');
+
+    toast.success('Curso excluído!', {
+      style: {
+        background: '#121212',
+        color: 'green',
+      },
+    });
+
     onClose();
   };
 

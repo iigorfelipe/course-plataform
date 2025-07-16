@@ -18,14 +18,14 @@ export default function EditCourse() {
   const router = useRouter();
   const params = useParams();
   const [course, setCourse] = useAtom(courseAtom.course);
+  const courses = useAtomValue(courseAtom.courses);
 
   const [loading, setLoading] = useState(true);
   const currentStep = useAtomValue(courseAtom.currentStep);
 
   useEffect(() => {
     const courseId = params.id as string;
-    const savedCourses = JSON.parse(localStorage.getItem('courses') || '[]');
-    const foundCourse = savedCourses.find((c: Course) => c.id === courseId);
+    const foundCourse = courses.find((c: Course) => c.id === courseId);
 
     if (foundCourse) {
       setCourse(foundCourse);

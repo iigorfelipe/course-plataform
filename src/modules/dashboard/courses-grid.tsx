@@ -18,8 +18,7 @@ export const CoursesGrid = () => {
   const openDeleteCourseModal = useSetAtom(modalAtom.openDeleteCourseModal);
 
   const handleDeleteCourseClick = (courseId: string) => {
-    const savedCourses = JSON.parse(localStorage.getItem('courses') || '[]');
-    const foundCourse = savedCourses.find((c: Course) => c.id === courseId);
+    const foundCourse = courses.find((c: Course) => c.id === courseId);
 
     if (foundCourse) {
       setCourse(foundCourse);

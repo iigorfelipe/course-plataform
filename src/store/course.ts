@@ -1,5 +1,6 @@
 import type { Course } from '@contracts/course';
 import { atom } from 'jotai';
+import { atomWithStorage } from 'jotai/utils';
 
 export const emptyCourse: Partial<Course> = {
   title: '',
@@ -11,7 +12,7 @@ export const emptyCourse: Partial<Course> = {
   modules: [],
 };
 
-const courses = atom<Course[]>([]);
+const courses = atomWithStorage<Course[]>('courses', []);
 const course = atom<Course>(emptyCourse as Course);
 const isLoaded = atom<boolean>(false);
 const openModules = atom<string[]>([]);

@@ -1,26 +1,22 @@
 'use client';
 
-import { useEffect } from 'react';
 import { Background } from '../modules/dashboard/backgound';
 import { IntroSection } from '../modules/dashboard/intro-section';
 import { StatsCards } from '../modules/dashboard/stats-cards';
 import { CoursesGrid } from '../modules/dashboard/courses-grid';
-import { useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { useAtomValue, useSetAtom } from 'jotai';
 import { EmpetyCourses } from '../modules/dashboard/empty-courses';
 import { courseAtom } from '@store/course';
 import { DeleteCourseModal } from '@modules/modals/delete-course';
 import { modalAtom } from '@store/modals';
+import { useEffect } from 'react';
 
 export default function Dashboard() {
-  const [courses, setCourses] = useAtom(courseAtom.courses);
+  const courses = useAtomValue(courseAtom.courses);
   const setIsLoaded = useSetAtom(courseAtom.isLoaded);
   const isOpenDeleteCourseModal = useAtomValue(modalAtom.isOpenDeleteCourseModal);
 
   useEffect(() => {
-    const savedCourses = localStorage.getItem('courses');
-    if (savedCourses) {
-      setCourses(JSON.parse(savedCourses));
-    }
     setTimeout(() => setIsLoaded(true), 100);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

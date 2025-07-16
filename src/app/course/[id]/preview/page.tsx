@@ -10,7 +10,7 @@ import { ProgressCard } from '@modules/preview/progress-card';
 import { ActionsCard } from '@modules/preview/actions-card';
 import { CourseContent } from '@modules/preview/course-content';
 import { StatsCard } from '@modules/preview/stats-card';
-import { useAtom, useSetAtom } from 'jotai';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { courseAtom } from '@store/course';
 import { NotFoundCourse } from '@components/not-found-course';
 import { LoadingCourse } from '@components/loading-course';
@@ -23,13 +23,13 @@ export default function CoursePreview() {
   const [loading, setLoading] = useState(true);
 
   const [course, setCourse] = useAtom(courseAtom.course);
+  const courses = useAtomValue(courseAtom.courses);
   const setOpenModules = useSetAtom(courseAtom.openModules);
   const setSelectedLesson = useSetAtom(courseAtom.selectedLesson);
 
   useEffect(() => {
     const courseId = params.id as string;
-    const savedCourses = JSON.parse(localStorage.getItem('courses') || '[]');
-    const foundCourse = savedCourses.find((c: Course) => c.id === courseId);
+    const foundCourse = courses.find((c: Course) => c.id === courseId);
 
     if (foundCourse) {
       setCourse(foundCourse);
