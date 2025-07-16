@@ -32,7 +32,7 @@ export const ProgressSteps = () => {
               <step.icon className="size-4 sm:size-5" />
               <span className="font-medium text-xs sm:text-base">{step.title}</span>
             </TooltipTrigger>
-            {course.title.trim().length === 0 && (
+            {currentStep !== step.id && course.title.trim().length === 0 && (
               <TooltipContent className="bg-gradient-to-r from-blue-600 to-purple-600 text-white">
                 <p>Adiciona um Título ao Curso para navegar</p>
               </TooltipContent>
