@@ -4,7 +4,7 @@ import { Clock, BookOpen, Download, Share2, Heart } from 'lucide-react';
 import { Button } from '@components/ui/button';
 import { Card, CardContent } from '@components/ui/card';
 import { Badge } from '@components/ui/badge';
-import { useAtomValue } from 'jotai';
+import { useAtom } from 'jotai';
 import { courseAtom } from '@store/course';
 import {
   getCategoryIcon,
@@ -13,9 +13,47 @@ import {
   getTotalDuration,
   getTotalLessons,
 } from '@utils/get';
+import { Course } from '@contracts/course';
+import { toast } from 'sonner';
 
 export const CourseInfo = () => {
-  const course = useAtomValue(courseAtom.course);
+  const [course, setCourse] = useAtom(courseAtom.course);
+
+  const saveCourse = () => {
+    const now = new Date().toISOString();
+    const courses: Course[] = JSON.parse(localStorage.getItem('courses') || '[]');
+    const currentCourse = courses.find((c) => c.id === course.id);
+
+    if (currentCourse) {
+      const updatedCourse = {
+        ...course,
+        updatedAt: now,
+        fav: !course.fav,
+      };
+      setCourse(updatedCourse);
+      const updatedCourses = [...courses.filter((c) => c.id !== course.id), updatedCourse];
+      localStorage.setItem('courses', JSON.stringify(updatedCourses));
+      return;
+    }
+  };
+
+  const shareCourse = () => {
+    const courseUrl = window.location.href;
+
+    navigator.clipboard
+      .writeText(courseUrl)
+      .then(() => {
+        toast.success('O link do curso foi copiado para a área de transferência', {
+          style: { backgroundColor: 'green' },
+          duration: 4000,
+        });
+      })
+      .catch(() => {
+        toast.error('Erro ao copiar o link.', {
+          style: { backgroundColor: 'red' },
+        });
+      });
+  };
 
   return (
     <Card className="glass-effect border-white/20 animate-slide-up" style={{ animationDelay: '0.1s' }}>
@@ -59,26 +97,37 @@ export const CourseInfo = () => {
                 {getLevelLabel(course.level)}
               </Badge>
               <div className="flex items-center gap-2 text-white/60">
-                <BookOpen className="w-4 h-4" />
+                <BookOpen className="size-4" />
                 <span>{getTotalLessons(course)} aulas</span>
               </div>
               <div className="flex items-center gap-2 text-white/60">
-                <Clock className="w-4 h-4" />
+                <Clock className="size-4" />
                 <span>{getTotalDuration(course)}</span>
               </div>
             </div>
 
             <div className="flex gap-4 flex-wrap">
-              <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 px-6">
-                <Heart className="w-4 h-4 mr-2" />
+              <Button
+                className="text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 px-6"
+                onClick={saveCourse}
+              >
+                <Heart
+                  className="size-4 mr-2"
+                  color={course.fav ? 'red' : 'white'}
+                  fill={course.fav ? 'red' : 'transparent'}
+                />
                 Favoritar
               </Button>
-              <Button variant="outline" className="bg-white/10 border-white/20 text-white hover:bg-white/20">
-                <Share2 className="w-4 h-4 mr-2" />
+              <Button
+                onClick={shareCourse}
+                variant="outline"
+                className="bg-white/10 border-white/20 text-white hover:bg-white/20"
+              >
+                <Share2 className="size-4 mr-2" />
                 Compartilhar
               </Button>
               <Button variant="outline" className="bg-white/10 border-white/20 text-white hover:bg-white/20">
-                <Download className="w-4 h-4 mr-2" />
+                <Download className="size-4 mr-2" />
                 Download
               </Button>
             </div>

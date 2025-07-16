@@ -2,6 +2,7 @@ export type Course = {
   id: string;
   title: string;
   description: string;
+  fav: boolean;
   thumbnail?: string;
   category: string;
   level: 'beginner' | 'intermediate' | 'advanced';

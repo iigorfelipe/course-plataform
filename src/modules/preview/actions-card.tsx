@@ -17,7 +17,7 @@ export const ActionsCard = () => {
 
       <CardContent className="flex flex-col gap-3">
         <Link href={`/course/${course.id}/edit`} className="w-full">
-          <Button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
+          <Button className="text-white w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
             Editar Curso
           </Button>
         </Link>

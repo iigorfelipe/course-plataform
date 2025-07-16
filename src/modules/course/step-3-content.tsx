@@ -107,6 +107,7 @@ export const ContentStep = ({ type = 'new' }: ContentStep) => {
         level: newCourseAtom.level || 'beginner',
         published: newCourseAtom.published || false,
         modules: newCourseAtom.modules || [],
+        fav: newCourseAtom.fav || false,
         createdAt: now,
         updatedAt: now,
       };

@@ -6,6 +6,7 @@ export const emptyCourse: Partial<Course> = {
   description: '',
   category: 'outros',
   level: 'beginner',
+  fav: false,
   published: false,
   modules: [],
 };
