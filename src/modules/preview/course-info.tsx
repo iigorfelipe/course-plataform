@@ -16,7 +16,11 @@ import {
 import { toast } from 'sonner';
 import { compressToBase64Url } from 'lib/compression';
 
-export const CourseInfo = () => {
+type CourseInfo = {
+  onDownloadImage: () => void;
+};
+
+export const CourseInfo = ({ onDownloadImage }: CourseInfo) => {
   const [course, setCourse] = useAtom(courseAtom.course);
   const [courses, setCourses] = useAtom(courseAtom.courses);
   const isStudent = useAtomValue(courseAtom.previewMode) === 'student';
@@ -156,7 +160,11 @@ export const CourseInfo = () => {
                 <Share2 className="size-4 mr-2" />
                 Compartilhar
               </Button>
-              <Button variant="outline" className="bg-white/10 border-white/20 text-white hover:bg-white/20">
+              <Button
+                variant="outline"
+                className="bg-white/10 border-white/20 text-white hover:bg-white/20"
+                onClick={onDownloadImage}
+              >
                 <Download className="size-4 mr-2" />
                 Download
               </Button>
