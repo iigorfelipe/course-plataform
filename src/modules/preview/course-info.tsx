@@ -14,7 +14,7 @@ import {
   getTotalLessons,
 } from '@utils/get';
 import { toast } from 'sonner';
-import { compressToEncodedURIComponent } from 'lz-string';
+import { compressToBase64Url } from 'lib/compression';
 
 export const CourseInfo = () => {
   const [course, setCourse] = useAtom(courseAtom.course);
@@ -39,13 +39,34 @@ export const CourseInfo = () => {
   };
 
   const shareCourse = () => {
-    const courseWithoutThumb = {
-      ...course,
-      thumbnail: undefined,
+    const module1 = course.modules[0];
+    const lesson1 = module1.lessons[0];
+
+    const minifyCourse = {
+      t: course.title,
+      d: course.description || undefined,
+      f: course.fav,
+      c: course.category || 'outros',
+      l: course.level || 'beginner',
+      m: {
+        t: module1.name || 'Módulo 1',
+        l: {
+          t: lesson1.title || 'Aula 1',
+          u: lesson1.videoUrl || undefined,
+          d: lesson1.description || undefined,
+          h: lesson1.duration || '00:00',
+        },
+      },
     };
 
-    const json = JSON.stringify(courseWithoutThumb);
-    const compressed = compressToEncodedURIComponent(json);
+    if (!minifyCourse) {
+      toast.error('Curso inválido para compartilhar.', {
+        style: { background: '#121212', color: 'red' },
+      });
+      return;
+    }
+
+    const compressed = compressToBase64Url(minifyCourse);
     const url = `${window.location.origin}/preview?data=${compressed}`;
 
     navigator.clipboard

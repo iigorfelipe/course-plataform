@@ -2,13 +2,13 @@
 
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { decompressFromEncodedURIComponent } from 'lz-string';
 import { useSetAtom } from 'jotai';
 import { courseAtom } from '@store/course';
 import { CoursePreviewLayout } from '@modules/preview/preview-layout';
 import { NotFoundCourse } from '@components/not-found-course';
 import { LoadingCourse } from '@components/loading-course';
-import type { Course } from '@contracts/course';
+import { decompressFromBase64Url } from 'lib/compression';
+import { Course, MinifiedCourse } from '@contracts/course';
 
 export const SharedCoursePreview = () => {
   const searchParams = useSearchParams();
@@ -26,15 +26,38 @@ export const SharedCoursePreview = () => {
 
     if (data) {
       try {
-        const json = decompressFromEncodedURIComponent(data);
-        const parsed: Course = JSON.parse(json);
+        const parsed = decompressFromBase64Url<MinifiedCourse>(data);
 
+        const reconstructedCourse = {
+          title: parsed.t,
+          description: parsed.d,
+          fav: parsed.f,
+          category: parsed.c || 'outros',
+          level: parsed.l || 'beginner',
+          modules: [
+            {
+              id: 'mod-1',
+              name: parsed.m.t,
+              lessons: [
+                {
+                  id: 'lesson-1',
+                  title: parsed.m.l.t,
+                  videoUrl: parsed.m.l.u,
+                  description: parsed.m.l.d,
+                  duration: parsed.m.l.h,
+                },
+              ],
+            },
+          ],
+        };
+
+        console.log('Curso reconstruído:', reconstructedCourse);
+
+        setCourse(reconstructedCourse as Course);
         setPreviewMode('student');
-
-        setCourse(parsed);
-        setOpenModules(parsed.modules.map((m) => m.id));
-        if (parsed.modules[0]?.lessons[0]) {
-          setSelectedLesson(parsed.modules[0].lessons[0].id);
+        setOpenModules(reconstructedCourse.modules.map((m) => m.id));
+        if (reconstructedCourse.modules[0]?.lessons[0]) {
+          setSelectedLesson(reconstructedCourse.modules[0].lessons[0].id);
         }
         setValid(true);
       } catch (err) {

@@ -25,3 +25,20 @@ export type Lesson = {
   duration: string;
   description: string;
 };
+
+export type MinifiedCourse = {
+  t: string;
+  d: string;
+  f: boolean;
+  c: string;
+  l: 'beginner' | 'intermediate' | 'advanced';
+  m: {
+    t: string;
+    l: {
+      t: string;
+      u: string;
+      d: string;
+      h: string;
+    };
+  };
+};

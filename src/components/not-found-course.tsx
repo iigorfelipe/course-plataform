@@ -8,7 +8,9 @@ export const NotFoundCourse = () => {
         <h2 className="text-2xl font-bold text-white mb-2">Curso não encontrado</h2>
         <p className="text-white/60 mb-6">O curso que você está procurando não existe</p>
         <Link href="/">
-          <Button className="bg-gradient-to-r from-blue-600 to-purple-600">Voltar ao Dashboard</Button>
+          <Button className="bg-gradient-to-r text-white from-blue-600 to-purple-600">
+            Voltar ao Dashboard
+          </Button>
         </Link>
       </div>
     </div>

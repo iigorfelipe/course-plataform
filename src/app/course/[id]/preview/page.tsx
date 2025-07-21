@@ -4,11 +4,9 @@ import { useEffect, useState } from 'react';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { courseAtom } from '@store/course';
-import { decompressFromEncodedURIComponent } from 'lz-string';
 import { NotFoundCourse } from '@components/not-found-course';
 import { LoadingCourse } from '@components/loading-course';
 import { CoursePreviewLayout } from '@modules/preview/preview-layout';
-import type { Course } from '@contracts/course';
 
 export default function CoursePreviewPage() {
   const params = useParams();
@@ -23,25 +21,6 @@ export default function CoursePreviewPage() {
   const setSelectedLesson = useSetAtom(courseAtom.selectedLesson);
 
   useEffect(() => {
-    const data = searchParams.get('data');
-
-    if (data) {
-      try {
-        const json = decompressFromEncodedURIComponent(data);
-        const sharedCourse: Course = JSON.parse(json);
-        setCourse(sharedCourse);
-        setOpenModules(sharedCourse.modules.map((m) => m.id));
-        if (sharedCourse.modules[0]?.lessons[0]) {
-          setSelectedLesson(sharedCourse.modules[0].lessons[0].id);
-        }
-        setLoading(false);
-        return;
-      } catch (error) {
-        console.error('Erro ao decodificar curso', error);
-        router.push('/');
-      }
-    }
-
     const courseId = params.id as string;
     const foundCourse = courses.find((c) => c.id === courseId);
     if (foundCourse) {
