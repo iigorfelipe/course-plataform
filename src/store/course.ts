@@ -18,6 +18,7 @@ const isLoaded = atom<boolean>(false);
 const openModules = atom<string[]>([]);
 const currentStep = atom<number>(1);
 const selectedLesson = atom<string | null>(null);
+const previewMode = atom<'editor' | 'student'>('editor');
 
 export const courseAtom = {
   courses,
@@ -26,4 +27,5 @@ export const courseAtom = {
   course,
   openModules,
   selectedLesson,
+  previewMode,
 };
