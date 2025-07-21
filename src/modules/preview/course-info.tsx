@@ -4,7 +4,7 @@ import { Clock, BookOpen, Download, Share2, Heart } from 'lucide-react';
 import { Button } from '@components/ui/button';
 import { Card, CardContent } from '@components/ui/card';
 import { Badge } from '@components/ui/badge';
-import { useAtom } from 'jotai';
+import { useAtom, useAtomValue } from 'jotai';
 import { courseAtom } from '@store/course';
 import {
   getCategoryIcon,
@@ -14,10 +14,12 @@ import {
   getTotalLessons,
 } from '@utils/get';
 import { toast } from 'sonner';
+import { compressToEncodedURIComponent } from 'lz-string';
 
 export const CourseInfo = () => {
   const [course, setCourse] = useAtom(courseAtom.course);
   const [courses, setCourses] = useAtom(courseAtom.courses);
+  const isStudent = useAtomValue(courseAtom.previewMode) === 'student';
 
   const saveCourse = () => {
     const now = new Date().toISOString();
@@ -37,24 +39,25 @@ export const CourseInfo = () => {
   };
 
   const shareCourse = () => {
-    const courseUrl = window.location.href;
+    const courseWithoutThumb = {
+      ...course,
+      thumbnail: undefined,
+    };
+
+    const json = JSON.stringify(courseWithoutThumb);
+    const compressed = compressToEncodedURIComponent(json);
+    const url = `${window.location.origin}/preview?data=${compressed}`;
 
     navigator.clipboard
-      .writeText(courseUrl)
+      .writeText(url)
       .then(() => {
         toast.success('Link do curso copiado!', {
-          style: {
-            background: '#121212',
-            color: 'green',
-          },
+          style: { background: '#121212', color: 'green' },
         });
       })
       .catch(() => {
         toast.error('Erro ao copiar o link.', {
-          style: {
-            background: '#121212',
-            color: 'red',
-          },
+          style: { background: '#121212', color: 'red' },
         });
       });
   };
@@ -81,13 +84,15 @@ export const CourseInfo = () => {
                 <h1 className="text-3xl font-bold text-white mb-2 sm:mb-0">{course.title}</h1>
                 <p className="text-white/70 text-lg leading-relaxed">{course.description}</p>
               </div>
-              <Badge
-                className={`${
-                  course.published ? 'bg-green-500/90' : 'bg-yellow-500/90'
-                } text-white border-0 px-4 py-2 hidden sm:flex`}
-              >
-                {course.published ? 'Publicado' : 'Rascunho'}
-              </Badge>
+              {!isStudent && (
+                <Badge
+                  className={`${
+                    course.published ? 'bg-green-500/90' : 'bg-yellow-500/90'
+                  } text-white border-0 px-4 py-2 hidden sm:flex`}
+                >
+                  {course.published ? 'Publicado' : 'Rascunho'}
+                </Badge>
+              )}
             </div>
 
             <div className="flex flex-wrap gap-4">
