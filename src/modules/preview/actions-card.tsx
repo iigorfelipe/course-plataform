@@ -3,11 +3,12 @@
 import Link from 'next/link';
 import { Button } from '@components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@components/ui/card';
-import { useAtomValue } from 'jotai';
+import { useAtomValue, useSetAtom } from 'jotai';
 import { courseAtom } from '@store/course';
 
 export const ActionsCard = () => {
   const course = useAtomValue(courseAtom.course);
+  const setPreviewMode = useSetAtom(courseAtom.previewMode);
 
   return (
     <Card className="glass-effect border-white/20 animate-slide-up" style={{ animationDelay: '0.3s' }}>
@@ -25,7 +26,7 @@ export const ActionsCard = () => {
         <Button
           variant="outline"
           className="w-full bg-white/10 border-white/20 text-white hover:bg-white/20"
-          disabled
+          onClick={() => setPreviewMode('student')}
         >
           Modo Aluno
         </Button>

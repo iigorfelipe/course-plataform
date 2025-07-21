@@ -13,6 +13,7 @@ import type { Course } from '@contracts/course';
 
 export const CoursesGrid = () => {
   const courses = useAtomValue(courseAtom.courses);
+  const setPreviewMode = useSetAtom(courseAtom.previewMode);
   const isLoaded = useAtomValue(courseAtom.isLoaded);
   const setCourse = useSetAtom(courseAtom.course);
   const openDeleteCourseModal = useSetAtom(modalAtom.openDeleteCourseModal);
@@ -116,6 +117,7 @@ export const CoursesGrid = () => {
                   <Button
                     size="sm"
                     className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0"
+                    onClick={() => setPreviewMode('editor')}
                   >
                     <Eye className="w-4 h-4 mr-2" />
                     Preview

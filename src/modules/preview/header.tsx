@@ -1,8 +1,13 @@
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@components/ui/button';
+import { useAtomValue } from 'jotai';
+import { courseAtom } from '@store/course';
 
 export const HeaderPreview = () => {
+  const isStudent = useAtomValue(courseAtom.previewMode) === 'student';
+  const course = useAtomValue(courseAtom.course);
+
   return (
     <div className="flex flex-col mb-8 animate-slide-up">
       <Link href="/">
@@ -12,8 +17,8 @@ export const HeaderPreview = () => {
         </Button>
       </Link>
       <div className="flex flex-col items-center text-center gap-2">
-        <h1 className="text-4xl font-bold text-white">Preview do Curso</h1>
-        <p className="text-white/60">Visualize como seu curso aparecerá para os alunos</p>
+        <h1 className="text-4xl font-bold text-white">{isStudent ? course.title : 'Preview do Curso'}</h1>
+        {!isStudent && <p className="text-white/60">Visualize como seu curso aparecerá para os alunos</p>}
       </div>
     </div>
   );
