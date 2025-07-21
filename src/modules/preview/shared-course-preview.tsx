@@ -51,8 +51,6 @@ export const SharedCoursePreview = () => {
           ],
         };
 
-        console.log('Curso reconstruído:', reconstructedCourse);
-
         setCourse(reconstructedCourse as Course);
         setPreviewMode('student');
         setOpenModules(reconstructedCourse.modules.map((m) => m.id));
